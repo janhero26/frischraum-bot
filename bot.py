@@ -93,7 +93,7 @@ async def frischraum(interaction: discord.Interaction, tag: str = 'heute'):
         if wochentag in GESCHLOSSEN:
             tag_name = WOCHENTAG_NAMEN[wochentag]
             await interaction.response.send_message(
-                f'🔒 {tag_name} hat der Frischraum geschlossen!\nVerfügbar: Montag bis Freitag'
+                f'🔒 {tag_name} hat der Frischraum geschlossen!\nVerfügbar: Montag bis Samstag'
             )
             return
         tag_slug = slugs[wochentag]
