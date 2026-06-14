@@ -36,10 +36,12 @@ def get_speiseplan(tag_slug):
         elif aktuelle_kategorie:
             name_el = element.select_one('.aw-meal-description')
             preis_el = element.select_one('.aw-meal-price')
+            datum_el = element.select_one('.aw-meal-badge')
             if name_el:
                 name = name_el.text.strip()
                 preis = preis_el.text.strip() if preis_el else ''
-                gerichte[aktuelle_kategorie].append((name, preis))
+                datum = datum_el.text.strip() if datum_el else ''
+                gerichte[aktuelle_kategorie].append((name, preis, datum))
 
     return gerichte
 
@@ -51,11 +53,16 @@ def format_speiseplan_embed(gerichte, tag_name):
     for kategorie, eintraege in gerichte.items():
         if eintraege:
             value = ''
-            for name, preis in eintraege:
-                value += f'• {name} — {preis}\n' if preis else f'• {name}\n'
+            for name, preis, datum in eintraege:
+                zeile = f'• {name}'
+                if preis:
+                    zeile += f' — {preis}'
+                if datum:
+                    zeile += f' *(zuletzt: {datum})*'
+                value += zeile + '\n'
             embed.add_field(name=kategorie, value=value, inline=False)
 
-    embed.set_footer(text='📍 Universitätsstraße 30 · ⏰ Mo–Fr geöffnet')
+    embed.set_footer(text='📍 Universitätsstraße 30 · ⏰ Mo–Sa geöffnet')
     return embed
 
 @bot.event
@@ -144,7 +151,7 @@ async def frischhelp(interaction: discord.Interaction):
         value='`/frischhelp` — Zeigt diese Übersicht',
         inline=False
     )
-    embed.set_footer(text='📍 Universitätsstraße 30 · ⏰ Mo–Fr geöffnet')
+    embed.set_footer(text='📍 Universitätsstraße 30 · ⏰ Mo–Sa geöffnet')
     await interaction.response.send_message(embed=embed)
 
 bot.run(TOKEN)
