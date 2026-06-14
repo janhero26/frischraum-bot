@@ -8,7 +8,7 @@ A Discord bot that displays the daily menu of the Frischraum cafeteria at the Un
 - 🐱 `/frischkitty` - Random cat image
 - ℹ️ `/frischhelp` - Shows all commands
 
-## Requirements
+## ⚙️Requirements
 - Python 3.11+
 - [discord.py](https://discordpy.readthedocs.io/)
 - [BeautifulSoup4](https://www.crummy.com/software/BeautifulSoup/)
