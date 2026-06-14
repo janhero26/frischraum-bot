@@ -47,7 +47,7 @@ def get_speiseplan(tag_slug):
 
 def format_speiseplan_embed(gerichte, tag_name):
     embed = discord.Embed(
-        title=f'🍽️ Frischraum – {tag_name}',
+        title=f'🍽️ Frischraum - {tag_name}',
         color=discord.Color.green()
     )
     for kategorie, eintraege in gerichte.items():
@@ -56,13 +56,13 @@ def format_speiseplan_embed(gerichte, tag_name):
             for name, preis, datum in eintraege:
                 zeile = f'• {name}'
                 if preis:
-                    zeile += f' — {preis}'
+                    zeile += f' - {preis}'
                 if datum:
                     zeile += f' *(zuletzt: {datum})*'
                 value += zeile + '\n'
             embed.add_field(name=kategorie, value=value, inline=False)
 
-    embed.set_footer(text='📍 Universitätsstraße 30 · ⏰ Mo–Sa geöffnet')
+    embed.set_footer(text='📍 Universitätsstraße 30 · ⏰ Mo-Sa geöffnet')
     return embed
 
 @bot.event
@@ -134,24 +134,24 @@ async def frischhelp(interaction: discord.Interaction):
     embed.add_field(
         name='🍽️ Speiseplan',
         value=(
-            '`/frischraum` — Heute\n'
-            '`/frischraum morgen` — Morgen\n'
-            '`/frischraum [tag]` — Bestimmter Tag\n'
+            '`/frischraum` - Heute\n'
+            '`/frischraum morgen` - Morgen\n'
+            '`/frischraum [tag]` - Bestimmter Tag\n'
             '*Dropdown mit allen Tagen erscheint automatisch!*'
         ),
         inline=False
     )
     embed.add_field(
         name='🐱 Spaß',
-        value='`/frischkitty` — Zufälliges Katzenbild',
+        value='`/frischkitty` - Zufälliges Katzenbild',
         inline=False
     )
     embed.add_field(
         name='ℹ️ Info',
-        value='`/frischhelp` — Zeigt diese Übersicht',
+        value='`/frischhelp` - Zeigt diese Übersicht',
         inline=False
     )
-    embed.set_footer(text='📍 Universitätsstraße 30 · ⏰ Mo–Sa geöffnet')
+    embed.set_footer(text='📍 Universitätsstraße 30 · ⏰ Mo-Sa geöffnet')
     await interaction.response.send_message(embed=embed)
 
 bot.run(TOKEN)
