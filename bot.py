@@ -14,7 +14,7 @@ intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix='/', intents=intents, help_command=None)
 
-GESCHLOSSEN = [5, 6]  # Samstag = 5, Sonntag = 6
+GESCHLOSSEN = [6]  # Nur Sonntag
 
 WOCHENTAG_NAMEN = {
     0: 'Montag', 1: 'Dienstag', 2: 'Mittwoch',
@@ -78,10 +78,11 @@ async def on_ready():
     app_commands.Choice(name='Mittwoch',   value='mittwoch'),
     app_commands.Choice(name='Donnerstag', value='donnerstag'),
     app_commands.Choice(name='Freitag',    value='freitag'),
+    app_commands.Choice(name='Samstag', value='samstag'),
 ])
 async def frischraum(interaction: discord.Interaction, tag: str = 'heute'):
     heute = datetime.now().weekday()
-    slugs = ['montag', 'dienstag', 'mittwoch', 'donnerstag', 'freitag']
+    slugs = ['montag', 'dienstag', 'mittwoch', 'donnerstag', 'freitag', 'samstag']
 
     if tag == 'morgen':
         wochentag = (heute + 1) % 7
