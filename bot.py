@@ -6,6 +6,8 @@ import requests
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 from datetime import datetime
+from datetime import datetime
+import pytz
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -88,7 +90,7 @@ async def on_ready():
     app_commands.Choice(name='Samstag', value='samstag'),
 ])
 async def frischraum(interaction: discord.Interaction, tag: str = 'heute'):
-    heute = datetime.now().weekday()
+    heute = datetime.now(pytz.timezone('Europe/Berlin')).weekday()
     slugs = ['montag', 'dienstag', 'mittwoch', 'donnerstag', 'freitag', 'samstag']
 
     if tag == 'morgen':
