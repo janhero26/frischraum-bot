@@ -6,7 +6,6 @@ import requests
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 from datetime import datetime
-from datetime import datetime
 import pytz
 
 load_dotenv()
@@ -24,28 +23,31 @@ WOCHENTAG_NAMEN = {
 }
 
 def get_speiseplan(tag_slug):
-    url = f'https://www.imensa.de/bayreuth/frischraum/{tag_slug}.html'
-    response = requests.get(url)
-    soup = BeautifulSoup(response.text, 'html.parser')
+    try:
+        url = f'https://www.imensa.de/bayreuth/frischraum/{tag_slug}.html'
+        response = requests.get(url, timeout=10)
+        soup = BeautifulSoup(response.text, 'html.parser')
 
-    gerichte = {}
-    aktuelle_kategorie = None
+        gerichte = {}
+        aktuelle_kategorie = None
 
-    for element in soup.select('h3, .aw-meal'):
-        if element.name == 'h3':
-            aktuelle_kategorie = element.text.strip()
-            gerichte[aktuelle_kategorie] = []
-        elif aktuelle_kategorie:
-            name_el = element.select_one('.aw-meal-description')
-            preis_el = element.select_one('.aw-meal-price')
-            datum_el = element.select_one('.aw-meal-badge')
-            if name_el:
-                name = name_el.text.strip()
-                preis = preis_el.text.strip() if preis_el else ''
-                datum = datum_el.text.strip() if datum_el else ''
-                gerichte[aktuelle_kategorie].append((name, preis, datum))
+        for element in soup.select('h3, .aw-meal'):
+            if element.name == 'h3':
+                aktuelle_kategorie = element.text.strip()
+                gerichte[aktuelle_kategorie] = []
+            elif aktuelle_kategorie:
+                name_el = element.select_one('.aw-meal-description')
+                preis_el = element.select_one('.aw-meal-price')
+                datum_el = element.select_one('.aw-meal-badge')
+                if name_el:
+                    name = name_el.text.strip()
+                    preis = preis_el.text.strip() if preis_el else ''
+                    datum = datum_el.text.strip() if datum_el else ''
+                    gerichte[aktuelle_kategorie].append((name, preis, datum))
 
-    return gerichte
+        return gerichte
+    except requests.exceptions.RequestException:
+        return None
 
 def format_speiseplan_embed(gerichte, tag_name):
     embed = discord.Embed(
@@ -113,7 +115,7 @@ async def frischraum(interaction: discord.Interaction, tag: str = 'heute'):
 
     gerichte = get_speiseplan(tag_slug)
     if not gerichte:
-        await interaction.response.send_message('❌ Kein Speiseplan gefunden.')
+        await interaction.response.send_message('❌ Speiseplan konnte nicht geladen werden. Bitte später nochmal versuchen.')
         return
 
     embed = format_speiseplan_embed(gerichte, tag_name)
