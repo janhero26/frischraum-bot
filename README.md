@@ -16,11 +16,12 @@ The bot is already hosted and running. You can invite it directly to your Discor
 
 If you want to host it yourself or modify it, follow the setup instructions below.
 
-## ⚙️Requirements
+## Requirements
 - Python 3.11+
 - [discord.py](https://discordpy.readthedocs.io/)
 - [BeautifulSoup4](https://www.crummy.com/software/BeautifulSoup/)
 - [requests](https://requests.readthedocs.io/)
+- [pytz](https://pypi.org/project/pytz/)
 
 ## Setup
 1. Clone the repository
