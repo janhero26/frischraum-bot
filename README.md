@@ -52,5 +52,5 @@ If you want to host it yourself or modify it, follow the setup instructions belo
 ```
 
 ## Notes
-- Menu data is scraped from [imensa.de](https://www.imensa.de/bayreuth/frischraum/index.html)
-- The Frischraum is closed on weekends, which the bot handles automatically
+- Closed on Sundays — the bot handles this automatically
+- Scraped from the public Studierendenwerk Oberfranken menu via imensa.de
